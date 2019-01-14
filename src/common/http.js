@@ -9,15 +9,14 @@ let HEADERS = {
     }
 };
 
-export const httpGet = (url) => {
-    return axios.get(`${BASE_URL}/api/v1/${url}`, HEADERS).then((response) => {
+export const httpGet = (url, params) => {
+    return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then((response) => {
         return response;
     }).catch((exception) => {
         let status = exception.response.status;
         if (status === 401 || status === 403) {
             return tryToRefreshTokens().then(() => {
-                console.log(0);
-                return axios.get(`${BASE_URL}/api/v1/${url}`, HEADERS).then((response) => {
+                return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then((response) => {
                     return response;
                 });
             }).catch((error) => {
@@ -52,6 +51,7 @@ export const httpPost = (url, data) => {
 export const login = (credentials) => {
     axios.post(`${BASE_URL}/login`, JSON.stringify(credentials), HEADERS).then((response) => {
         handleTokens(response);
+        localStorage.setItem('userId', response.data.userId);
         history.push("/");
     }).catch((exception) => {
         console.log(exception);
@@ -59,7 +59,6 @@ export const login = (credentials) => {
 };
 
 export const registration = (data) => {
-    console.log(data);
     return axios.post(`${BASE_URL}/security/user/registration`, JSON.stringify(data), HEADERS).then((response) => {
         history.push("/login");
         return response;
@@ -90,4 +89,16 @@ const handleTokens = (response) => {
     HEADERS.headers.Authorization = `Bearer ${accessToken}`;
     localStorage.setItem("access_token", accessToken);
     localStorage.setItem("refresh_token", refreshToken);
+};
+
+const handleParams = (params) => {
+    if (!params) {
+        return '';
+    } else {
+        let result = '?';
+        for (let param of params) {
+            result += `${param.name}=${param.value}&`;
+        }
+        return result.substr(0, result.length - 1);
+    }
 };

@@ -1,13 +1,13 @@
 import React from 'react';
-import {httpGet, logout} from "../common/http";
+import {httpGet} from "../common/http";
 import SockJS from 'sockjs-client';
 import {Stomp} from '@stomp/stompjs';
 
 class Main extends React.Component {
     test() {
-        // httpGet('user/admin/exist').then((response) => {
-        //     console.log(response);
-        // });
+        httpGet('user/admin/exist').then((response) => {
+            console.log(response);
+        });
         var socket = new SockJS('http://localhost:8080/chat');
         var stompClient = Stomp.over(socket);
 
@@ -17,10 +17,6 @@ class Main extends React.Component {
         });
     }
 
-    doLogout() {
-        logout();
-    }
-
     render() {
         return (
             <div>
@@ -28,7 +24,7 @@ class Main extends React.Component {
                     Main
                 </h1>
                 <button onClick={this.test}>Test</button>
-                <button onClick={this.doLogout}>Logout</button>
+                <button onClick={this.props.doLogout}>Logout</button>
             </div>
         );
     }
