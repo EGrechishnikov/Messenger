@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import {Router, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import App from "./common/App";
-import store from "./common/store";
-import history from "./common/history";
+import store from "./common/Store";
+import history from "./common/History";
 
 ReactDOM.render(
     <Provider store={store}>

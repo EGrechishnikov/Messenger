@@ -1,26 +1,26 @@
 import axios from 'axios';
-import {BASE_URL} from "./config";
-import history from "./history";
+import {BASE_URL} from './Config';
+import history from './History';
 
 let HEADERS = {
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
-        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
 };
 
 export const httpGet = (url, params) => {
-    return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then((response) => {
+    return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then(response => {
         return response;
-    }).catch((exception) => {
+    }).catch(exception => {
         let status = exception.response.status;
         if (status === 401 || status === 403) {
             return tryToRefreshTokens().then(() => {
-                return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then((response) => {
+                return axios.get(`${BASE_URL}/api/v1/${url}${handleParams(params)}`, HEADERS).then(response => {
                     return response;
+                }).catch(error => {
+                    throw error;
                 });
-            }).catch((error) => {
-                console.log(error);
             });
         } else {
             console.log(exception);
@@ -29,9 +29,15 @@ export const httpGet = (url, params) => {
 };
 
 export const httpPost = (url, data) => {
-    return axios.post(`${BASE_URL}/api/v1/${url}`, JSON.stringify(data), HEADERS).then((response) => {
+    let headers = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+    };
+    return axios.post(`${BASE_URL}/api/v1/${url}`, data, headers).then(response => {
         return response;
-    }).catch((exception) => {
+    }).catch(exception => {
         let status = exception.response.status;
         if (status === 401 || status === 403) {
             return tryToRefreshTokens().then(() => {
@@ -39,8 +45,8 @@ export const httpPost = (url, data) => {
                     .then((response) => {
                         return response;
                     });
-            }).catch((error) => {
-                console.log(error);
+            }).catch(error => {
+                throw error;
             });
         } else {
             console.log(exception);
@@ -48,50 +54,50 @@ export const httpPost = (url, data) => {
     });
 };
 
-export const login = (credentials) => {
+export const login = credentials => {
     axios.post(`${BASE_URL}/login`, JSON.stringify(credentials), HEADERS).then((response) => {
         handleTokens(response);
-        localStorage.setItem('userId', response.data.userId);
-        history.push("/");
-    }).catch((exception) => {
+        localStorage.setItem('login', response.data.login);
+        history.push('/');
+    }).catch(exception => {
         console.log(exception);
     });
 };
 
-export const registration = (data) => {
+export const registration = data => {
     return axios.post(`${BASE_URL}/security/user/registration`, JSON.stringify(data), HEADERS).then((response) => {
-        history.push("/login");
+        history.push('/login');
         return response;
-    }).catch((exception) => {
+    }).catch(exception => {
         console.log(exception);
     });
 };
 
 export const logout = () => {
-    axios.post(`${BASE_URL}/security/user/logout`, localStorage.getItem("refresh_token"));
+    axios.post(`${BASE_URL}/security/user/logout`, localStorage.getItem('refresh_token'));
     localStorage.clear();
-    history.push("/login")
+    history.push('/login')
 };
 
 const tryToRefreshTokens = () => {
-    return axios.post(`${BASE_URL}/security/token/refresh`, localStorage.getItem("refresh_token"), HEADERS)
-        .then((response) => {
+    return axios.post(`${BASE_URL}/security/token/refresh`, localStorage.getItem('refresh_token'), HEADERS)
+        .then(response => {
             handleTokens(response);
-        }).catch((error) => {
-            history.push("/login");
+        }).catch(error => {
+            history.push('/login');
             throw error;
         });
 };
 
-const handleTokens = (response) => {
+const handleTokens = response => {
     let accessToken = response.data.accessToken;
     let refreshToken = response.data.refreshToken;
     HEADERS.headers.Authorization = `Bearer ${accessToken}`;
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
+    localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('refresh_token', refreshToken);
 };
 
-const handleParams = (params) => {
+const handleParams = params => {
     if (!params) {
         return '';
     } else {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from "./Login";
-import {login} from "../../common/http";
+import {login} from "../../common/Http";
 
 class LoginContainer extends React.Component {
     constructor(props) {
