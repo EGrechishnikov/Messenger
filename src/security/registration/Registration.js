@@ -21,13 +21,13 @@ class Registration extends React.Component {
                 <h1>
                     Registration
                 </h1>
-                <input placeholder="login"
+                <input placeholder='login'
                        value={this.state.credentials.login}
-                       name="login"
+                       name='login'
                        onChange={this.onInputChange}/>
-                <input placeholder="password"
+                <input placeholder='password'
                        value={this.state.credentials.password}
-                       name="password"
+                       name='password'
                        onChange={this.onInputChange}/>
                 <button onClick={this.props.doRegistration.bind(null, this.state.credentials)}>Registration</button>
             </div>

@@ -22,17 +22,23 @@ class UserDetail extends React.Component {
     }
 
     render() {
+        let avatar = this.state.currentUser.attachment;
+        if (avatar) {
+            let src = `data:image;base64,${avatar.content}`;
+            avatar = <img src={src} alt='avatar'/>;
+        }
         return(
             <div>
                 <h1>{this.state.currentUser.login}</h1>
+                {avatar}
                 <form onSubmit={this.props.save.bind(null, this.state.currentUser, this.state.avatar)}>
-                    <input type="text"
+                    <input type='text'
                            value={this.state.currentUser.name ? this.state.currentUser.name : ''}
                            onChange={this.onNameChange}/>
-                    <input type="file"
+                    <input type='file'
                            value={this.state.currentUser.avatar}
                            onChange={this.onFileUpload}/>
-                    <button type="submit">Сохранить</button>
+                    <button type='submit'>Сохранить</button>
                 </form>
             </div>
         );

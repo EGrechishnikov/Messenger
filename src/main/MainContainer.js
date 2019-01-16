@@ -1,12 +1,12 @@
 import React from 'react';
-import Main from "./Main";
-import {httpGet, logout} from "../common/Http";
-import store from "../common/Store";
-import {UPDATE_CURRENT_USER} from "../reducer/UserReducer";
+import Main from './Main';
+import {httpGet, logout} from '../common/Http';
+import store from '../common/Store';
+import {UPDATE_CURRENT_USER} from '../reducer/UserReducer';
 
 class MainContainer extends React.Component {
     componentDidMount() {
-        httpGet(`user/${localStorage.getItem("login")}`).then((response) => {
+        httpGet(`user/${localStorage.getItem('login')}`).then(response => {
             console.log(response.data);
             store.dispatch({
                 type: UPDATE_CURRENT_USER,
@@ -16,7 +16,7 @@ class MainContainer extends React.Component {
     }
 
     search(name) {
-        httpGet('user', [{name: 'name', value: name}]).then((response) => {
+        httpGet('user', [{name: 'name', value: name}]).then(response => {
             console.log(response.data);
         });
     }

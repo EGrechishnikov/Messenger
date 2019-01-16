@@ -103,7 +103,9 @@ const handleParams = params => {
     } else {
         let result = '?';
         for (let param of params) {
-            result += `${param.name}=${param.value}&`;
+            if (param.value) {
+                result += `${param.name}=${param.value}&`;
+            }
         }
         return result.substr(0, result.length - 1);
     }

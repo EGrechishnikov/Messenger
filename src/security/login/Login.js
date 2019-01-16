@@ -19,13 +19,13 @@ class Login extends React.Component {
         return (
             <div>
                 <h1>Login</h1>
-                <input placeholder="login"
+                <input placeholder='login'
                        value={this.state.credentials.login}
-                       name="login"
+                       name='login'
                        onChange={this.onInputChange}/>
-                <input placeholder="password"
+                <input placeholder='password'
                        value={this.state.credentials.password}
-                       name="password"
+                       name='password'
                        onChange={this.onInputChange}/>
                 <button onClick={this.props.doLogin.bind(null, this.state.credentials)}>Login</button>
             </div>

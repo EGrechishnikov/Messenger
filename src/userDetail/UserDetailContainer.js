@@ -1,7 +1,7 @@
 import React from 'react';
 import UserDetail from './UserDetail';
 import {httpPost} from '../common/Http';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import history from '../common/History';
 
 class UserDetailContainer extends React.Component {
@@ -31,7 +31,7 @@ class UserDetailContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = store => {
     return {
         currentUser: store.userState.currentUser
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Registration from "./Registration";
+import Registration from './Registration';
 import {registration} from '../../common/Http';
 
 class RegistrationContainer extends React.Component {
