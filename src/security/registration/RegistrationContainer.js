@@ -1,6 +1,6 @@
 import React from 'react';
 import Registration from './Registration';
-import {registration} from '../../common/Http';
+import {checkIsLoginExist, registration} from '../../common/Http';
 
 class RegistrationContainer extends React.Component {
     constructor(props) {
@@ -12,9 +12,13 @@ class RegistrationContainer extends React.Component {
         registration(credentials);
     }
 
+    checkIsLoginExist(login) {
+        return checkIsLoginExist(login);
+    }
+
     render() {
         return (
-            <Registration doRegistration={this.doRegistration}/>
+            <Registration doRegistration={this.doRegistration} checkIsLoginExist={this.checkIsLoginExist}/>
         );
     }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import {httpGet} from "../common/Http";
 import SockJS from 'sockjs-client';
 import {Client} from '@stomp/stompjs';
 import {Link} from 'react-router-dom';
@@ -7,15 +6,8 @@ import SearchComponentContainer from '../search/SearchComponentContainer';
 
 class Main extends React.Component {
     test() {
-        // httpGet('user/admin/exist').then((response) => {
-        //     console.log(response);
-        // });
-
         const client = new Client();
-        client.webSocketFactory = () => new SockJS('http://localhost:8080/chat');
-        client.connectHeaders = {
-            'Sec-WebSocket-Key': 'Bearer 123*'
-        };
+        client.webSocketFactory = () => new SockJS(`http://localhost:8080/chat?access_token=${localStorage.getItem('access_token')}`);
         client.onConnect = () => {
             client.subscribe('/user/chat', message => console.log(message));
             client.publish({

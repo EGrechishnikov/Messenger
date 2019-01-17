@@ -79,6 +79,14 @@ export const logout = () => {
     history.push('/login')
 };
 
+export const checkIsLoginExist = (login) => {
+    return axios.get(`${BASE_URL}/security/user/${login}/exist`).then(response => {
+        return response;
+    }).catch(exception => {
+        console.log(exception);
+    });
+};
+
 const tryToRefreshTokens = () => {
     return axios.post(`${BASE_URL}/security/token/refresh`, localStorage.getItem('refresh_token'), HEADERS)
         .then(response => {
