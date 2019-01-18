@@ -12,7 +12,7 @@ class Main extends React.Component {
             client.subscribe('/user/chat', message => console.log(message));
             client.publish({
                 destination: '/chat/message',
-                body: "Hello, STOMP"
+                body: 'Hello, STOMP'
             });
         };
         client.onStompError = error => console.log(error);

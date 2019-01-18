@@ -1,4 +1,6 @@
 import React from 'react';
+import TextField from "@material-ui/core/es/TextField/TextField";
+import Button from "@material-ui/core/es/Button/Button";
 
 class Login extends React.Component {
     constructor(props) {
@@ -17,18 +19,32 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <form onSubmit={this.props.doLogin.bind(null, this.state.credentials)}>
                 <h1>Login</h1>
-                <input placeholder='login'
-                       value={this.state.credentials.login}
-                       name='login'
-                       onChange={this.onInputChange}/>
-                <input placeholder='password'
-                       value={this.state.credentials.password}
-                       name='password'
-                       onChange={this.onInputChange}/>
-                <button onClick={this.props.doLogin.bind(null, this.state.credentials)}>Login</button>
-            </div>
+                <TextField
+                    label='Login'
+                    margin='normal'
+                    value={this.state.credentials.login}
+                    name='login'
+                    variant="outlined"
+                    required
+                    onChange={this.onInputChange}/>
+                <br/>
+                <TextField
+                    label='Password'
+                    margin="normal"
+                    type='password'
+                    value={this.state.credentials.password}
+                    name='password'
+                    variant="outlined"
+                    required
+                    onChange={this.onInputChange}/>
+                <br/>
+                <br/>
+                <Button variant="contained" color="primary" type='submit' size='large'>
+                    submit
+                </Button>
+            </form>
         );
     }
 }

@@ -9,7 +9,7 @@ class SearchComponentContainer extends React.Component {
     }
 
     doSearch(name) {
-        httpGet("user", [{name: 'name', value: name}, {name: 'currentUserLogin', value: localStorage.getItem('login')}]).then(response => {
+        httpGet('user', [{name: 'name', value: name}, {name: 'currentUserLogin', value: localStorage.getItem('login')}]).then(response => {
             console.log(response);
         });
     }
