@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from "@material-ui/core/es/Button/Button";
 
 class SearchComponent extends React.Component {
     constructor(props) {
@@ -14,9 +15,14 @@ class SearchComponent extends React.Component {
     render() {
         return (
             <div>
-                <h1>Search</h1>
                 <input value={this.state.searchLine} onChange={this.onInputChange}/>
-                <button onClick={this.props.doSearch.bind({}, this.state.searchLine)}>search test</button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size='medium'
+                    onClick={this.props.doSearch.bind({}, this.state.searchLine)}>
+                    search
+                </Button>
             </div>
         );
     }

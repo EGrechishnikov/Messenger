@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
+import history from '../../common/History';
+import Link from "react-router-dom/es/Link";
 
 class Login extends React.Component {
     constructor(props) {
@@ -44,6 +46,11 @@ class Login extends React.Component {
                 <Button variant="contained" color="primary" type='submit' size='large'>
                     submit
                 </Button>
+                <Link to='/registration' className='ml-20'>
+                    <Button variant="contained" color="secondary" size='large'>
+                        registration
+                    </Button>
+                </Link>
             </form>
         );
     }

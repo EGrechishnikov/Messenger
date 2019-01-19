@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from "react-router-dom/es/Link";
 
 class UserDetail extends React.Component {
     constructor(props) {
@@ -30,6 +31,7 @@ class UserDetail extends React.Component {
         return(
             <div>
                 <h1>{this.state.currentUser.login}</h1>
+                <Link to='/'>Back</Link>
                 {avatar}
                 <form onSubmit={this.props.save.bind(null, this.state.currentUser, this.state.avatar)}>
                     <input type='text'

@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
+import Link from "react-router-dom/es/Link";
 
 class Registration extends React.Component {
     constructor(props) {
@@ -80,6 +81,11 @@ class Registration extends React.Component {
                 <Button variant="contained" color="primary" type='submit' size='large'>
                     submit
                 </Button>
+                <Link to='/login' className='ml-20'>
+                    <Button variant="contained" color="secondary" size='large'>
+                    login
+                    </Button>
+                </Link>
             </form>
         );
     }
