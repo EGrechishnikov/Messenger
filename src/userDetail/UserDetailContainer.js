@@ -17,7 +17,7 @@ class UserDetailContainer extends React.Component {
         if (avatar) {
             data.append('file', avatar);
         }
-        httpPost('user', data).then(() => {
+        httpPost('user', data, true).then(() => {
             history.push('/');
         }).catch((error) => {
             console.log(error);

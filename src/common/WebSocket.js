@@ -14,8 +14,8 @@ client.onWebSocketClose = () => console.log('closed');
 export const send = message => {
     client.publish({
         destination: '/chat/message',
-        body: message
+        body: JSON.stringify(message)
     });
 };
 
-export const connect = () => client.activate();
+export const activate = () => client.activate();

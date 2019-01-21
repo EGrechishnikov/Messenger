@@ -28,13 +28,11 @@ export const httpGet = (url, params) => {
     });
 };
 
-export const httpPost = (url, data) => {
-    let headers = {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-    };
+export const httpPost = (url, data, withFile) => {
+    let headers = HEADERS;
+    if (withFile) {
+        headers.headers['Content-Type'] = 'multipart/form-data';
+    }
     return axios.post(`${BASE_URL}/api/v1/${url}`, data, headers).then(response => {
         return response;
     }).catch(exception => {
