@@ -8,14 +8,18 @@ client.webSocketFactory = () =>
 client.onConnect = () => {
     client.subscribe('/user/chat', message => console.log(message));
 };
-client.onStompError = error => console.log(error);
-client.onWebSocketClose = () => console.log('closed');
 
-export const send = message => {
+export const activateWebSocket = () => {
+    client.activate();
+};
+
+export const sendWebSocketMessage = message => {
     client.publish({
         destination: '/chat/message',
         body: JSON.stringify(message)
     });
 };
 
-export const activate = () => client.activate();
+export const closeWebSocket = () => {
+    client.deactivate();
+};

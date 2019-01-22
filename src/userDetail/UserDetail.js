@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "react-router-dom/es/Link";
+import {Avatar} from "@material-ui/core/es/index";
 
 class UserDetail extends React.Component {
     constructor(props) {
@@ -23,12 +24,11 @@ class UserDetail extends React.Component {
     }
 
     render() {
-        let avatar = this.state.currentUser.attachment;
+        let avatar = this.state.currentUser.attachment.content;
         if (avatar) {
-            let src = `data:image;base64,${avatar.content}`;
-            avatar = <img src={src} alt='avatar'/>;
+            avatar = <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
         }
-        return(
+        return (
             <div>
                 <h1>{this.state.currentUser.login}</h1>
                 <Link to='/'>Back</Link>

@@ -3,6 +3,8 @@ import UserDetail from './UserDetail';
 import {httpPost} from '../common/Http';
 import {connect} from 'react-redux';
 import history from '../common/History';
+import store from '../common/Store';
+import {UPDATE_CURRENT_USER} from "../reducer/UserReducer";
 
 class UserDetailContainer extends React.Component {
     constructor(props) {
@@ -17,8 +19,12 @@ class UserDetailContainer extends React.Component {
         if (avatar) {
             data.append('file', avatar);
         }
-        httpPost('user', data, true).then(() => {
+        httpPost('user', data, true).then((response) => {
             history.push('/');
+            store.dispatch({
+                type: UPDATE_CURRENT_USER,
+                currentUser: response.data
+            });
         }).catch((error) => {
             console.log(error);
         });
@@ -32,6 +38,7 @@ class UserDetailContainer extends React.Component {
 }
 
 const mapStateToProps = store => {
+    console.log(store.userState.currentUser);
     return {
         currentUser: store.userState.currentUser
     }
