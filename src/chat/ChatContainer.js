@@ -1,50 +1,61 @@
 import React from 'react';
-import Chat from "./Chat";
+import ContactsContainer from './contacts/ContactsContainer';
+import Chat from './Chat';
 import {connect} from 'react-redux';
 import {httpGet} from '../common/Http';
-import {sendWebSocketMessage, activateWebSocket, closeWebSocket} from '../common/WebSocket';
 import store from '../common/Store';
-import {LOAD_CHATS} from "../reducer/ChatReducer";
+import {LOAD_MESSAGES} from '../reducer/ChatReducer';
+import {activateWebSocket, closeWebSocket, sendWebSocketMessage} from '../common/WebSocket';
 
 class ChatContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.loadChats = this.loadChats.bind(this);
+    loadMessages() {
+        let chatId = this.props.currentChat;
+        if (chatId) {
+            httpGet(`message/${chatId}`).then(response => {
+                store.dispatch({
+                    type: LOAD_MESSAGES,
+                    currentMessages: response.data.content
+                });
+            });
+        }
     }
 
     componentDidMount() {
         activateWebSocket();
     }
 
-    loadChats() {
-        httpGet(`chat/${this.props.currentUser.id}`).then(response => {
-            store.dispatch({
-                    type: LOAD_CHATS,
-                    chats: response.data
-                }
-            );
-        });
+    componentDidUpdate(prevProps) {
+        if (this.props.currentChat !== prevProps.currentChat) {
+            this.loadMessages();
+        }
     }
 
     componentWillUnmount() {
         closeWebSocket();
     }
 
-    sendMessage() {
-        sendWebSocketMessage({text: 'test', fromUserId: 2, chatId: 1});
+    sendMessage(message) {
+        sendWebSocketMessage({text: message, fromUserId: this.props.currentUserId, chatId: this.props.currentChat});
     }
 
     render() {
         return (
-            <Chat sendMessage={this.sendMessage} chats={this.props.chats} loadChats={this.loadChats}/>
+            <div>
+                <ContactsContainer/>
+                <Chat currentChat={this.props.currentChat}
+                      messages={this.props.messages}
+                      sendMessage={this.sendMessage}/>
+            </div>
         );
     }
 }
 
 const mapStateToProps = store => {
+    let currentUser = store.userState.currentUser;
     return {
-        currentUser: store.userState.currentUser,
-        chats: store.chatState.chats
+        currentChat: store.chatState.currentChat,
+        messages: store.chatState.currentMessages,
+        currentUserId: currentUser ? currentUser.id : undefined
     }
 };
 

@@ -3,8 +3,8 @@ import SockJS from "sockjs-client";
 
 const client = new Client();
 
-client.webSocketFactory = () =>
-    new SockJS(`http://localhost:8080/chat?access_token=${localStorage.getItem('access_token')}`);
+client.webSocketFactory = () => new SockJS(`http://localhost:8080/chat?access_token=${localStorage.getItem('access_token')}`);
+
 client.onConnect = () => {
     client.subscribe('/user/chat', message => console.log(message));
 };

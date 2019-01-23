@@ -25,14 +25,11 @@ class UserDetail extends React.Component {
 
     render() {
         let avatar = this.state.currentUser.attachment.content;
-        if (avatar) {
-            avatar = <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
-        }
         return (
             <div>
                 <h1>{this.state.currentUser.login}</h1>
                 <Link to='/'>Back</Link>
-                {avatar}
+                {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>}
                 <form onSubmit={this.props.save.bind(null, this.state.currentUser, this.state.avatar)}>
                     <input type='text'
                            value={this.state.currentUser.name ? this.state.currentUser.name : ''}

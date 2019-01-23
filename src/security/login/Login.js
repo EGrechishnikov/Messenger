@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
-import history from '../../common/History';
 import Link from "react-router-dom/es/Link";
 
 class Login extends React.Component {
