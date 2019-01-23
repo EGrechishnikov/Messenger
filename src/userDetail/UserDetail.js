@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from "react-router-dom/es/Link";
 import {Avatar} from "@material-ui/core/es/index";
+import Button from "@material-ui/core/es/Button/Button";
+import TextField from "@material-ui/core/es/TextField/TextField";
 
 class UserDetail extends React.Component {
     constructor(props) {
@@ -24,20 +26,36 @@ class UserDetail extends React.Component {
     }
 
     render() {
-        let avatar = this.state.currentUser.attachment.content;
+        let avatar = this.state.currentUser.attachment;
         return (
             <div>
                 <h1>{this.state.currentUser.login}</h1>
-                <Link to='/'>Back</Link>
-                {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>}
+                <Link to='/'>
+                    <Button variant="contained" color="primary" size='large'>
+                        Back
+                    </Button>
+                </Link>
+                {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar.content}`}/>}
                 <form onSubmit={this.props.save.bind(null, this.state.currentUser, this.state.avatar)}>
-                    <input type='text'
-                           value={this.state.currentUser.name ? this.state.currentUser.name : ''}
-                           onChange={this.onNameChange}/>
+                    <TextField
+                        label='Name'
+                        margin='normal'
+                        value={this.state.currentUser.name ? this.state.currentUser.name : ''}
+                        variant="outlined"
+                        onChange={this.onNameChange}/>
                     <input type='file'
+                           accept="image/*"
                            value={this.state.currentUser.avatar}
+                           id="outlined-button-file"
                            onChange={this.onFileUpload}/>
-                    <button type='submit'>Сохранить</button>
+                    <label htmlFor="outlined-button-file">
+                        <Button variant="outlined" component="span">
+                            Upload
+                        </Button>
+                    </label>
+                    <Button variant="contained" color="primary" type='submit' size='large'>
+                        Save
+                    </Button>
                 </form>
             </div>
         );
