@@ -4,9 +4,9 @@ import Chat from './Chat';
 import {connect} from 'react-redux';
 import {httpGet} from '../common/Http';
 import store from '../common/Store';
-import {LOAD_MESSAGES, UPDATE_MESSAGES} from '../reducer/ChatReducer';
 import {PAGE_SIZE} from "../common/Config";
 import {sendWebSocketMessage} from "../websocket/WebSocketContainer";
+import {LOAD_MESSAGES, UPDATE_MESSAGES} from "../reducer/MessageReducer";
 
 class ChatContainer extends React.Component {
     constructor(props) {
@@ -63,7 +63,7 @@ const mapStateToProps = store => {
     let currentUser = store.userState.currentUser;
     return {
         currentChat: store.chatState.currentChat,
-        messages: store.chatState.currentMessages,
+        messages: store.messageState.currentMessages,
         currentUserId: currentUser ? currentUser.id : undefined
     }
 };

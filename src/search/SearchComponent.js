@@ -27,7 +27,8 @@ class SearchComponent extends React.Component {
     }
 
     searchListRender() {
-        return this.props.searchList.map(item => <MenuItem key={item.id}>{item.name}</MenuItem>);
+        return this.props.searchList.map(item =>
+            <MenuItem key={item.id} onClick={this.props.onClick.bind(null, item.id)}>{item.name}</MenuItem>);
     }
 
     render() {

@@ -4,7 +4,7 @@ import WebSocket from './WebSocket';
 import {Client} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import store from '../common/Store';
-import {ADD_MESSAGE} from "../reducer/ChatReducer";
+import {ADD_MESSAGE} from "../reducer/MessageReducer";
 
 class WebSocketContainer extends React.Component {
     constructor(props) {

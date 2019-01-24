@@ -1,17 +1,11 @@
 import React from 'react';
 import Menu from "./Menu";
-import {httpGet, logout} from "../common/Http";
+import {logout} from "../common/Http";
 import {connect} from "react-redux";
 import store from '../common/Store';
 import {USER_LOGOUT} from "../reducer/ChatReducer";
 
 class MenuContainer extends React.Component {
-    search(name) {
-        httpGet('user', [{name: 'name', value: name}]).then(response => {
-            console.log(response.data);
-        });
-    }
-
     doLogout() {
         logout();
         store.dispatch({
@@ -21,9 +15,15 @@ class MenuContainer extends React.Component {
 
     render() {
         return(
-            <Menu doLogout={this.doLogout} search={this.search}/>
+            <Menu doLogout={this.doLogout}/>
         );
     }
 }
 
-export default connect(MenuContainer);
+const mapStateToProps = store => {
+    return {
+
+    }
+};
+
+export default connect(mapStateToProps)(MenuContainer);

@@ -10,15 +10,18 @@ class Contacts extends React.Component {
     chatsRender() {
         return this.props.chats.map(chat => {
             let avatar;
-            if (chat.users[1].attachment) {
-                avatar = chat.users[1].attachment.content;
+            if (chat.users[0].attachment) {
+                avatar = chat.users[0].attachment.content;
             }
             return <ListItem button key={chat.id} alignItems="flex-start"
                              onClick={this.props.onChatClick.bind(null, chat.id)}>
-                <ListItemAvatar>
-                    {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>}
-                </ListItemAvatar>
-                <ListItemText primary={chat.users[1].name} secondary={chat.users[1].login}/>
+                {
+                    avatar &&
+                    <ListItemAvatar>
+                        <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
+                    </ListItemAvatar>
+                }
+                <ListItemText primary={chat.users[0].name} secondary={chat.users[0].login}/>
             </ListItem>;
         });
     }
