@@ -4,34 +4,42 @@ import Chat from './Chat';
 import {connect} from 'react-redux';
 import {httpGet} from '../common/Http';
 import store from '../common/Store';
-import {LOAD_MESSAGES} from '../reducer/ChatReducer';
-import {activateWebSocket, closeWebSocket, sendWebSocketMessage} from '../common/WebSocket';
+import {LOAD_MESSAGES, UPDATE_MESSAGES} from '../reducer/ChatReducer';
+import {PAGE_SIZE} from "../common/Config";
+import {sendWebSocketMessage} from "../websocket/WebSocketContainer";
 
 class ChatContainer extends React.Component {
-    loadMessages() {
+    constructor(props) {
+        super(props);
+        this.loadMessages = this.loadMessages.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+    }
+
+    loadMessages(update, page = 0) {
         let chatId = this.props.currentChat;
         if (chatId) {
-            httpGet(`message/${chatId}`).then(response => {
+            httpGet(`chat/${chatId}/messages`, [
+                {name: 'page', value: page},
+                {name: 'size', value: PAGE_SIZE},
+                {name: 'sort', value: 'created,DESC'}
+            ]).then(response => {
+                let messages = response.data.content;
+                if (update && messages.length === 0) {
+                    return;
+                }
+                messages.sort((m1, m2) => m1.created > m2.created ? 1 : -1);
                 store.dispatch({
-                    type: LOAD_MESSAGES,
-                    currentMessages: response.data.content
+                    type: update ? UPDATE_MESSAGES : LOAD_MESSAGES,
+                    messages: messages
                 });
             });
         }
     }
 
-    componentDidMount() {
-        activateWebSocket();
-    }
-
     componentDidUpdate(prevProps) {
         if (this.props.currentChat !== prevProps.currentChat) {
-            this.loadMessages();
+            this.loadMessages(false);
         }
-    }
-
-    componentWillUnmount() {
-        closeWebSocket();
     }
 
     sendMessage(message) {
@@ -44,7 +52,8 @@ class ChatContainer extends React.Component {
                 <ContactsContainer/>
                 <Chat currentChat={this.props.currentChat}
                       messages={this.props.messages}
-                      sendMessage={this.sendMessage}/>
+                      sendMessage={this.sendMessage}
+                      loadMessages={this.loadMessages}/>
             </div>
         );
     }

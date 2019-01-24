@@ -1,6 +1,8 @@
 export const LOAD_CHATS = 'LOAD_CHATS';
 export const CURRENT_CHAT = 'CURRENT_CHAT';
 export const LOAD_MESSAGES = 'LOAD_MESSAGES';
+export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
 
 const initialChatState = {
     chats: [],
@@ -15,7 +17,13 @@ const chatReducer = (state = initialChatState, action) => {
         case CURRENT_CHAT:
             return Object.assign({}, state, {currentChat: action.currentChat});
         case LOAD_MESSAGES:
-            return Object.assign({}, state, {currentMessages: action.currentMessages});
+            return Object.assign({}, state, {currentMessages: action.messages});
+        case UPDATE_MESSAGES:
+            return Object.assign({}, state, {currentMessages: action.messages.concat(state.currentMessages)});
+        case ADD_MESSAGE:
+            let updatedMessages = state.currentMessages.slice();
+            updatedMessages.push(action.message);
+            return Object.assign({}, state, {currentMessages: updatedMessages});
         default:
             return state;
     }
