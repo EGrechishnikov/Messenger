@@ -3,6 +3,7 @@ export const CURRENT_CHAT = 'CURRENT_CHAT';
 export const LOAD_MESSAGES = 'LOAD_MESSAGES';
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const USER_LOGOUT = 'UPDATE_CURRENT_USER';
 
 const initialChatState = {
     chats: [],
@@ -24,6 +25,8 @@ const chatReducer = (state = initialChatState, action) => {
             let updatedMessages = state.currentMessages.slice();
             updatedMessages.push(action.message);
             return Object.assign({}, state, {currentMessages: updatedMessages});
+        case USER_LOGOUT:
+            return initialChatState;
         default:
             return state;
     }

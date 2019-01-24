@@ -1,6 +1,9 @@
 import React from 'react';
 import Menu from "./Menu";
 import {httpGet, logout} from "../common/Http";
+import {connect} from "react-redux";
+import store from '../common/Store';
+import {USER_LOGOUT} from "../reducer/ChatReducer";
 
 class MenuContainer extends React.Component {
     search(name) {
@@ -11,6 +14,9 @@ class MenuContainer extends React.Component {
 
     doLogout() {
         logout();
+        store.dispatch({
+            type: USER_LOGOUT
+        });
     }
 
     render() {
@@ -20,4 +26,4 @@ class MenuContainer extends React.Component {
     }
 }
 
-export default MenuContainer;
+export default connect(MenuContainer);
