@@ -1,19 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import WebSocket from './WebSocket';
 import {Client} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import store from '../common/Store';
 import {ADD_MESSAGE} from "../reducer/MessageReducer";
+import {withSnackbar} from "notistack";
+import Button from "@material-ui/core/Button/Button";
+import {CURRENT_CHAT} from "../reducer/ChatReducer";
 
 class WebSocketContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: {
-            text: 'WebSocket',
-            fromUserId: 0,
-            chatId: 0
-        }};
+        this.handleMessageNotify = this.handleMessageNotify.bind(this);
         this.initWebSocket();
     }
 
@@ -23,17 +21,33 @@ class WebSocketContainer extends React.Component {
         WebSocketContainer.client.webSocketFactory = () =>
             new SockJS(`http://localhost:8080/chat?access_token=${localStorage.getItem('access_token')}`);
         WebSocketContainer.client.onConnect = () => {
-            WebSocketContainer.client.subscribe('/user/chat', message => {
-                console.log(message);
-                this.setState({message: message});
-                if (message.chatId === this.props.currentChat) {
-                    store.dispatch({
-                        type: ADD_MESSAGE,
-                        message: message
-                    });
-                }
+            WebSocketContainer.client.subscribe('/user/chat', response =>
+                this.handleMessageNotify(JSON.parse(response.body)));
+        }
+    }
+
+    handleMessageNotify(message) {
+        if (message.chatId === this.props.currentChat) {
+            store.dispatch({
+                type: ADD_MESSAGE,
+                message: message
             });
-        };
+        } else {
+            this.props.enqueueSnackbar(`${message.fromUserId}: ${message.text}`, {
+                anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                },
+                action: <Button size="small" onClick={this.onNotifyClick.bind(null, message.chatId)}>Open</Button>
+            });
+        }
+    }
+
+    onNotifyClick(chatId) {
+        store.dispatch({
+            type: CURRENT_CHAT,
+            currentChat: chatId
+        });
     }
 
     componentDidMount() {
@@ -45,9 +59,7 @@ class WebSocketContainer extends React.Component {
     }
 
     render() {
-        return(
-            <WebSocket message={this.state.message}/>
-        )
+        return null;
     }
 }
 
@@ -68,4 +80,4 @@ export const sendWebSocketMessage = message => {
     })
 };
 
-export default connect(mapStateToProps)(WebSocketContainer);
+export default connect(mapStateToProps)(withSnackbar(WebSocketContainer));

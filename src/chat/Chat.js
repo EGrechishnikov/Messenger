@@ -9,10 +9,24 @@ class Chat extends React.Component {
             message: ''
         };
         this.onInputChange = this.onInputChange.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+        this.onScroll = this.onScroll.bind(this);
     }
 
     onInputChange(event) {
         this.setState({message: event.target.value});
+    }
+
+    sendMessage() {
+        this.props.sendMessage(this.state.message);
+        this.setState({message: ''});
+    }
+
+    onScroll() {
+        //TODO add infinity scroll
+        if (true) {
+            this.props.loadMessages(true, this.state.page);
+        }
     }
 
     render() {
@@ -26,10 +40,9 @@ class Chat extends React.Component {
                         value={this.state.message}
                         variant="outlined"
                         onChange={this.onInputChange}/>
-                    <Button variant="contained" color="primary" size='large' onClick={this.props.sendMessage.bind(null, this.state.message)}>
+                    <Button variant="contained" color="primary" size='large' onClick={this.sendMessage}>
                         Send
                     </Button>
-                    <button onClick={this.props.loadMessages.bind(null, true, this.state.page)}>Load</button>
                 </div> :
                 null
         );
