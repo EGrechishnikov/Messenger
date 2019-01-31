@@ -45,11 +45,9 @@ class Login extends React.Component {
                 <Button variant="contained" color="primary" type='submit' size='large'>
                     submit
                 </Button>
-                <Link to='/registration' className='ml-20'>
-                    <Button variant="contained" color="secondary" size='large'>
-                        registration
-                    </Button>
-                </Link>
+                <Button component={Link} to='/registration' variant="contained" color="secondary" size='large'>
+                    registration
+                </Button>
             </form>
         );
     }

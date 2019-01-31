@@ -1,7 +1,7 @@
 export const LOAD_CHATS = 'LOAD_CHATS';
-export const CURRENT_CHAT = 'CURRENT_CHAT';
+export const CHANGE_CURRENT_CHAT = 'CHANGE_CURRENT_CHAT';
 export const ADD_CHAT = 'ADD_CHAT';
-export const USER_LOGOUT = 'UPDATE_CURRENT_USER';
+export const USER_LOGOUT = 'USER_LOGOUT';
 
 const initialChatState = {
     chats: [],
@@ -16,7 +16,7 @@ const chatReducer = (state = initialChatState, action) => {
             let updatedChats = state.chats.slice();
             updatedChats.push(action.chat);
             return Object.assign({}, state, {chats: updatedChats});
-        case CURRENT_CHAT:
+        case CHANGE_CURRENT_CHAT:
             return Object.assign({}, state, {currentChat: action.currentChat});
         case USER_LOGOUT:
             return initialChatState;

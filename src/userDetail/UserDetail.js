@@ -30,11 +30,9 @@ class UserDetail extends React.Component {
         return (
             <div>
                 <h1>{this.state.currentUser.login}</h1>
-                <Link to='/'>
-                    <Button variant="contained" color="primary" size='large'>
-                        Back
-                    </Button>
-                </Link>
+                <Button component={Link} to='/' variant="contained" color="primary" size='large'>
+                    Back
+                </Button>
                 {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar.content}`}/>}
                 <form onSubmit={this.props.save.bind(null, this.state.currentUser, this.state.avatar)}>
                     <TextField

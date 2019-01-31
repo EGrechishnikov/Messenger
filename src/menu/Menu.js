@@ -8,14 +8,14 @@ class Menu extends React.Component {
         return (
             <div>
                 <SearchComponentContainer/>
-                <Link to='/me'>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size='medium'>
-                        me
-                    </Button>
-                </Link>
+                <Button
+                    component={Link}
+                    to='/me'
+                    variant="contained"
+                    color="primary"
+                    size='medium'>
+                    me
+                </Button>
                 <Button
                     variant="contained"
                     color="secondary"

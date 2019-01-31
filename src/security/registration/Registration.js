@@ -81,11 +81,9 @@ class Registration extends React.Component {
                 <Button variant="contained" color="primary" type='submit' size='large'>
                     submit
                 </Button>
-                <Link to='/login' className='ml-20'>
-                    <Button variant="contained" color="secondary" size='large'>
+                <Button component={Link} to='/login' variant="contained" color="secondary" size='large'>
                     login
-                    </Button>
-                </Link>
+                </Button>
             </form>
         );
     }

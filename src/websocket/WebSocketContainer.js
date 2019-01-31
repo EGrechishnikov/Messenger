@@ -6,7 +6,7 @@ import store from '../common/Store';
 import {ADD_MESSAGE} from "../reducer/MessageReducer";
 import {withSnackbar} from "notistack";
 import Button from "@material-ui/core/Button/Button";
-import {CURRENT_CHAT} from "../reducer/ChatReducer";
+import {CHANGE_CURRENT_CHAT} from "../reducer/ChatReducer";
 
 class WebSocketContainer extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class WebSocketContainer extends React.Component {
 
     onNotifyClick(chatId) {
         store.dispatch({
-            type: CURRENT_CHAT,
+            type: CHANGE_CURRENT_CHAT,
             currentChat: chatId
         });
     }

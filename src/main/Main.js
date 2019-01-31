@@ -8,7 +8,6 @@ import {SnackbarProvider} from "notistack";
 import {MAX_MESSAGE_NOTIFY} from "../common/Config";
 
 class Main extends React.Component {
-
     render() {
         return (
             <div>

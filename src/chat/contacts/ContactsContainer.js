@@ -3,7 +3,7 @@ import Contacts from "./Contacts";
 import {connect} from 'react-redux';
 import {httpGet} from '../../common/Http';
 import store from '../../common/Store';
-import {CURRENT_CHAT, LOAD_CHATS} from "../../reducer/ChatReducer";
+import {CHANGE_CURRENT_CHAT, LOAD_CHATS} from "../../reducer/ChatReducer";
 
 class ContactsContainer extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class ContactsContainer extends React.Component {
 
     onChatClick(id) {
         store.dispatch({
-            type: CURRENT_CHAT,
+            type: CHANGE_CURRENT_CHAT,
             currentChat: id
         });
     }

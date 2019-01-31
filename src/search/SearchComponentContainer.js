@@ -3,7 +3,7 @@ import SearchComponent from './SearchComponent';
 import {httpGet, httpPost} from '../common/Http';
 import {connect} from "react-redux";
 import store from '../common/Store';
-import {ADD_CHAT, CURRENT_CHAT} from "../reducer/ChatReducer";
+import {ADD_CHAT, CHANGE_CURRENT_CHAT} from "../reducer/ChatReducer";
 
 class SearchComponentContainer extends React.Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class SearchComponentContainer extends React.Component {
                 chat: response.data
             });
             store.dispatch({
-                type: CURRENT_CHAT,
+                type: CHANGE_CURRENT_CHAT,
                 currentChat: response.data.id
             });
         });
