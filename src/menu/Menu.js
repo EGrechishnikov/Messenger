@@ -9,11 +9,11 @@ class Menu extends React.Component {
             <div>
                 <SearchComponentContainer/>
                 <Button
-                    component={Link}
-                    to='/me'
                     variant="contained"
                     color="primary"
-                    size='medium'>
+                    size='medium'
+                    component={Link}
+                    to='/me'>
                     me
                 </Button>
                 <Button

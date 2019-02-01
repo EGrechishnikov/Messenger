@@ -30,7 +30,7 @@ class UserDetail extends React.Component {
         return (
             <div>
                 <h1>{this.state.currentUser.login}</h1>
-                <Button component={Link} to='/' variant="contained" color="primary" size='large'>
+                <Button variant="contained" color="primary" size='large' component={Link} to='/'>
                     Back
                 </Button>
                 {avatar && <Avatar alt='avatar' src={`data:image;base64,${avatar.content}`}/>}

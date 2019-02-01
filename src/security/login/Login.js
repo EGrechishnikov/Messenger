@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
 import Link from "react-router-dom/es/Link";
+import Grid from "@material-ui/core/Grid/Grid";
+import Typography from "@material-ui/core/Typography/Typography";
 
 class Login extends React.Component {
     constructor(props) {
@@ -21,33 +23,51 @@ class Login extends React.Component {
     render() {
         return (
             <form onSubmit={this.props.doLogin.bind(null, this.state.credentials)}>
-                <h1>Login</h1>
-                <TextField
-                    label='Login'
-                    margin='normal'
-                    value={this.state.credentials.login}
-                    name='login'
-                    variant="outlined"
-                    required
-                    onChange={this.onInputChange}/>
-                <br/>
-                <TextField
-                    label='Password'
-                    margin="normal"
-                    type='password'
-                    value={this.state.credentials.password}
-                    name='password'
-                    variant="outlined"
-                    required
-                    onChange={this.onInputChange}/>
-                <br/>
-                <br/>
-                <Button variant="contained" color="primary" type='submit' size='large'>
-                    submit
-                </Button>
-                <Button component={Link} to='/registration' variant="contained" color="secondary" size='large'>
-                    registration
-                </Button>
+                <Grid container
+                      direction='column'
+                      justify="center"
+                      alignItems="center">
+                    <Typography variant="h3" gutterBottom>
+                        Login
+                    </Typography>
+                    <TextField
+                        label='Login'
+                        margin='normal'
+                        value={this.state.credentials.login}
+                        name='login'
+                        variant="outlined"
+                        required
+                        onChange={this.onInputChange}/>
+                    <TextField
+                        label='Password'
+                        margin="normal"
+                        type='password'
+                        value={this.state.credentials.password}
+                        name='password'
+                        variant="outlined"
+                        required
+                        onChange={this.onInputChange}/>
+                </Grid>
+                <Grid container
+                      direction='row'
+                      spacing={24}
+                      justify="center"
+                      alignItems="center">
+                    <Grid item>
+                        <Button variant="contained" color="primary" type='submit' size='large'>
+                            submit
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button component={Link}
+                                to='/registration'
+                                variant="contained"
+                                color="secondary"
+                                size='large'>
+                            registration
+                        </Button>
+                    </Grid>
+                </Grid>
             </form>
         );
     }
