@@ -7,6 +7,7 @@ import store from '../common/Store';
 import {PAGE_SIZE} from "../common/Config";
 import {sendWebSocketMessage} from "../websocket/WebSocketContainer";
 import {LOAD_MESSAGES, UPDATE_MESSAGES} from "../reducer/MessageReducer";
+import {Grid} from "@material-ui/core/es/index";
 
 class ChatContainer extends React.Component {
     constructor(props) {
@@ -48,13 +49,18 @@ class ChatContainer extends React.Component {
 
     render() {
         return (
-            <div>
-                <ContactsContainer/>
-                <Chat currentChat={this.props.currentChat}
-                      messages={this.props.messages}
-                      sendMessage={this.sendMessage}
-                      loadMessages={this.loadMessages}/>
-            </div>
+            <Grid container>
+                <Grid item xs={4}>
+                    <ContactsContainer/>
+                </Grid>
+                <Grid item xs={8}>
+                    <Chat currentChat={this.props.currentChat}
+                          currentUserId={this.props.currentUserId}
+                          messages={this.props.messages}
+                          sendMessage={this.sendMessage}
+                          loadMessages={this.loadMessages}/>
+                </Grid>
+            </Grid>
         );
     }
 }

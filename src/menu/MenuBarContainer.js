@@ -1,11 +1,11 @@
 import React from 'react';
-import Menu from "./Menu";
 import {logout} from "../common/Http";
 import {connect} from "react-redux";
 import store from '../common/Store';
 import {USER_LOGOUT} from "../reducer/ChatReducer";
+import MenuBar from "./MenuBar";
 
-class MenuContainer extends React.Component {
+class MenuBarContainer extends React.Component {
     doLogout() {
         logout();
         store.dispatch({
@@ -15,15 +15,15 @@ class MenuContainer extends React.Component {
 
     render() {
         return(
-            <Menu doLogout={this.doLogout}/>
+            <MenuBar doLogout={this.doLogout}/>
         );
     }
 }
 
-const mapStateToProps = store => {
+const mapStateToProps = () => {
     return {
 
     }
 };
 
-export default connect(mapStateToProps)(MenuContainer);
+export default connect(mapStateToProps)(MenuBarContainer);

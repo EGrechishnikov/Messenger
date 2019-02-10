@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, TextField} from "@material-ui/core/es/index";
+import {Button, Grid, TextField} from "@material-ui/core/es/index";
+import Message from "../message/Message";
 
 class Chat extends React.Component {
     constructor(props) {
@@ -32,18 +33,24 @@ class Chat extends React.Component {
     render() {
         return (
             this.props.currentChat ?
-                <div>
-                    {this.props.messages.map(message => <p key={message.id}>{message.text}</p>)}
+                <Grid container justify='center' alignItems='center'>
+                    <Grid container direction='column' alignItems='center'>
+                        {
+                            this.props.messages.map(message =>
+                                <Message key={message.id}
+                                         text={message.text}
+                                         isAuthor={message.fromUserId === this.props.currentUserId}/>)
+                        }
+                    </Grid>
                     <TextField
                         label='Message'
                         margin='normal'
                         value={this.state.message}
-                        variant="outlined"
                         onChange={this.onInputChange}/>
                     <Button variant="contained" color="primary" size='large' onClick={this.sendMessage}>
                         Send
                     </Button>
-                </div> :
+                </Grid> :
                 null
         );
     }

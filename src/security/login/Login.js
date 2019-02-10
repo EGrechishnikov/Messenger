@@ -50,7 +50,6 @@ class Login extends React.Component {
                 </Grid>
                 <Grid container
                       direction='row'
-                      spacing={24}
                       justify="center"
                       alignItems="center">
                     <Grid item>
