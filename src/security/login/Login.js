@@ -22,52 +22,60 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.props.doLogin.bind(null, this.state.credentials)}>
-                <Grid container
-                      direction='column'
-                      justify="center"
-                      alignItems="center">
-                    <Typography variant="h3" gutterBottom>
-                        Login
-                    </Typography>
-                    <TextField
-                        label='Login'
-                        margin='normal'
-                        value={this.state.credentials.login}
-                        name='login'
-                        variant="outlined"
-                        required
-                        onChange={this.onInputChange}/>
-                    <TextField
-                        label='Password'
-                        margin="normal"
-                        type='password'
-                        value={this.state.credentials.password}
-                        name='password'
-                        variant="outlined"
-                        required
-                        onChange={this.onInputChange}/>
-                </Grid>
-                <Grid container
-                      direction='row'
-                      justify="center"
-                      alignItems="center">
-                    <Grid item>
-                        <Button variant="contained" color="primary" type='submit' size='large'>
-                            submit
-                        </Button>
+            <Grid container
+                  direction='column'
+                  justify="center"
+                  alignItems="center"
+                  className='full-height'>
+                <form onSubmit={this.props.doLogin.bind(null, this.state.credentials)}>
+                    <Grid container
+                          direction='column'
+                          justify="center"
+                          spacing={24}
+                          alignItems="center"
+                          className='mt-0'>
+                        <Typography variant="h3" gutterBottom>
+                            Login
+                        </Typography>
+                        <TextField
+                            label='Login'
+                            margin='normal'
+                            value={this.state.credentials.login}
+                            name='login'
+                            variant="outlined"
+                            required
+                            onChange={this.onInputChange}/>
+                        <TextField
+                            label='Password'
+                            margin="normal"
+                            type='password'
+                            value={this.state.credentials.password}
+                            name='password'
+                            variant="outlined"
+                            required
+                            onChange={this.onInputChange}/>
                     </Grid>
-                    <Grid item>
-                        <Button component={Link}
-                                to='/registration'
-                                variant="contained"
-                                color="secondary"
-                                size='large'>
-                            registration
-                        </Button>
+                    <Grid container
+                          direction='row'
+                          justify="center"
+                          spacing={24}
+                          alignItems="center"
+                          className='mt-0'>
+                        <Grid item>
+                            <Button variant="contained" color="primary" type='submit' size='large'>
+                                submit
+                            </Button>
+                        </Grid>
+                            <Button component={Link}
+                                    to='/registration'
+                                    variant="contained"
+                                    color="secondary"
+                                    size='large'>
+                                registration
+                            </Button>
                     </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Grid>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Grid, TextField} from "@material-ui/core/es/index";
+import {Button, Grid, List, TextField} from "@material-ui/core/es/index";
 import Message from "../message/Message";
 
 class Chat extends React.Component {
@@ -34,22 +34,36 @@ class Chat extends React.Component {
         return (
             this.props.currentChat ?
                 <Grid container justify='center' alignItems='center'>
-                    <Grid container direction='column' alignItems='center'>
-                        {
-                            this.props.messages.map(message =>
-                                <Message key={message.id}
-                                         text={message.text}
-                                         isAuthor={message.fromUserId === this.props.currentUserId}/>)
-                        }
+                    <Grid container>
+                        <List className='messages'>
+                            {
+                                this.props.messages.map(message =>
+                                    <Message key={message.id}
+                                             date={message.created}
+                                             text={message.text}
+                                             isAuthor={message.fromUserId === this.props.currentUserId}
+                                    />
+                                )
+
+                            }
+                        </List>
                     </Grid>
-                    <TextField
-                        label='Message'
-                        margin='normal'
-                        value={this.state.message}
-                        onChange={this.onInputChange}/>
-                    <Button variant="contained" color="primary" size='large' onClick={this.sendMessage}>
-                        Send
-                    </Button>
+                    <Grid item xs={6}>
+                        <TextField
+                            label='Message'
+                            margin='normal'
+                            fullWidth
+                            multiline
+                            rows='1'
+                            rowsMax='3'
+                            value={this.state.message}
+                            onChange={this.onInputChange}/>
+                    </Grid>
+                    <Grid item className='ml-20 mt-20'>
+                        <Button variant="contained" color="primary" size='large' onClick={this.sendMessage}>
+                            Send
+                        </Button>
+                    </Grid>
                 </Grid> :
                 null
         );

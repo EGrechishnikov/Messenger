@@ -13,24 +13,30 @@ class Contacts extends React.Component {
             if (chat.users[0].attachment) {
                 avatar = chat.users[0].attachment.content;
             }
-            return <ListItem button key={chat.id} alignItems="flex-start"
-                             onClick={this.props.onChatClick.bind(null, chat.id)}>
-                {
-                    avatar &&
-                    <ListItemAvatar>
-                        <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
-                    </ListItemAvatar>
-                }
-                <ListItemText primary={chat.users[0].name} secondary={chat.users[0].login}/>
-            </ListItem>;
+            return (
+                <ListItem button key={chat.id}
+                          alignItems="flex-start"
+                          onClick={this.props.onChatClick.bind(null, chat.id)}
+                          className={this.props.currentChat === chat.id ? 'active-contact' : ''}>
+                    {
+                        avatar &&
+                        <ListItemAvatar>
+                            <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
+                        </ListItemAvatar>
+                    }
+                    <ListItemText primary={chat.users[0].name} secondary={chat.users[0].login}/>
+                </ListItem>
+            );
         });
     }
 
     render() {
         return (
-            <div>
-                <List>{this.chatsRender()}</List>
-            </div>
+            <List>
+                {
+                    this.chatsRender()
+                }
+            </List>
         );
     }
 }

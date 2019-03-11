@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import {MenuItem, MenuList} from "@material-ui/core/es/index";
-import Button from "@material-ui/core/es/Button/Button";
 
 class SearchComponent extends React.Component {
     constructor(props) {
@@ -10,15 +9,10 @@ class SearchComponent extends React.Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.searchListRender = this.searchListRender.bind(this);
         this.changeSearchLine = this.changeSearchLine.bind(this);
-        this.clear = this.clear.bind(this);
     }
 
     onInputChange(event) {
         this.changeSearchLine(event.target.value);
-    }
-
-    clear() {
-        this.changeSearchLine('');
     }
 
     changeSearchLine(name) {
@@ -33,16 +27,13 @@ class SearchComponent extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='grow'>
                 <TextField
+                    type='search'
                     label='Search'
                     margin='normal'
                     value={this.state.searchLine}
-                    variant="outlined"
                     onChange={this.onInputChange}/>
-                <Button variant="contained" color="secondary" size='large' onClick={this.clear}>
-                    Clear
-                </Button>
                 <MenuList>
                     {
                         this.searchListRender()

@@ -50,7 +50,7 @@ class ChatContainer extends React.Component {
     render() {
         return (
             <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} className='contacts-list'>
                     <ContactsContainer/>
                 </Grid>
                 <Grid item xs={8}>

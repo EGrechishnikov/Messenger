@@ -27,11 +27,17 @@ class MenuBar extends React.Component {
         return (
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" color="inherit" noWrap>
-                        Messenger
-                    </Typography>
+                    <div className='mr-20'>
+                        <Typography variant="h6" color="inherit" noWrap>
+                            Messenger
+                        </Typography>
+                    </div>
                     <SearchComponentContainer/>
-                    <IconButton onClick={this.handleMenuOpen} color='inherit'>
+                    <IconButton
+                        onClick={this.handleMenuOpen}
+                        aria-haspopup="true"
+                        aria-owns={Boolean(this.state.anchorEl) ? 'menu-appbar' : undefined}
+                        color='inherit'>
                         <AccountCircle/>
                     </IconButton>
                     <Menu

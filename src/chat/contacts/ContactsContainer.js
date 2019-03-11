@@ -11,6 +11,12 @@ class ContactsContainer extends React.Component {
         this.loadChats = this.loadChats.bind(this);
     }
 
+    componentWillMount() {
+        if(this.props.currentUser) {
+            this.loadChats();
+        }
+    }
+
     componentDidUpdate(prevProps) {
         if (!prevProps.currentUser && this.props.currentUser) {
             this.loadChats();
@@ -36,7 +42,7 @@ class ContactsContainer extends React.Component {
 
     render() {
         return (
-            <Contacts chats={this.props.chats} onChatClick={this.onChatClick}/>
+            <Contacts chats={this.props.chats} onChatClick={this.onChatClick} currentChat={this.props.currentChat}/>
         );
     }
 }
@@ -44,7 +50,8 @@ class ContactsContainer extends React.Component {
 const mapStateToProps = store => {
     return {
         currentUser: store.userState.currentUser,
-        chats: store.chatState.chats
+        chats: store.chatState.chats,
+        currentChat: store.chatState.currentChat
     }
 };
 

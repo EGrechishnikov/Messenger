@@ -5,8 +5,12 @@ import RegistrationContainer from '../security/registration/RegistrationContaine
 import MainContainer from '../main/MainContainer';
 import CssBaseline from "@material-ui/core/es/CssBaseline/CssBaseline";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import style from '../common/style/Theme.sass';
 
 const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     // palette: {
     //     type: 'dark'
     // }

@@ -1,11 +1,16 @@
 import React from 'react';
-import {Grid} from "@material-ui/core/es/index";
+import {Chip, Grid, ListItem, Paper, Typography} from "@material-ui/core/es/index";
 
 class Message extends React.Component {
     render() {
-        console.log(this.props.isAuthor);
         return(
-            <Grid item xs={4}>{this.props.text}</Grid>
+            <ListItem alignItems="flex-start">
+                <Paper elevation={1} className={this.props.isAuthor ? 'my-message' : 'message'}>
+                    <Typography variant="p">
+                        {this.props.text}
+                    </Typography>
+                </Paper>
+                </ListItem>
         );
     }
 }
