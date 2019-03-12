@@ -33,12 +33,17 @@ class SearchComponent extends React.Component {
                     label='Search'
                     margin='normal'
                     value={this.state.searchLine}
+                    className='search-input'
                     onChange={this.onInputChange}/>
-                <MenuList>
-                    {
-                        this.searchListRender()
-                    }
-                </MenuList>
+                {
+                    this.props.searchList.length > 0 ?
+                        <MenuList className='search-list'>
+                            {
+                                this.searchListRender()
+                            }
+                        </MenuList> :
+                        null
+                }
             </div>
         );
     }

@@ -12,6 +12,7 @@ import {Grid} from "@material-ui/core/es/index";
 class ChatContainer extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {lastMessageLoaded: false, loading: false};
         this.loadMessages = this.loadMessages.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
     }
@@ -19,6 +20,7 @@ class ChatContainer extends React.Component {
     loadMessages(update, page = 0) {
         let chatId = this.props.currentChat;
         if (chatId) {
+            this.setState({loading: true});
             httpGet(`chat/${chatId}/messages`, [
                 {name: 'page', value: page},
                 {name: 'size', value: PAGE_SIZE},
@@ -32,6 +34,10 @@ class ChatContainer extends React.Component {
                 store.dispatch({
                     type: update ? UPDATE_MESSAGES : LOAD_MESSAGES,
                     messages: messages
+                });
+                this.setState({
+                    lastMessageLoaded: response.data.last,
+                    loading: false
                 });
             });
         }
@@ -50,14 +56,16 @@ class ChatContainer extends React.Component {
     render() {
         return (
             <Grid container>
-                <Grid item xs={4} className='contacts-list'>
+                <Grid item xs={4} className='contacts-list mt-6'>
                     <ContactsContainer/>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={8} className='mt-6'>
                     <Chat currentChat={this.props.currentChat}
                           currentUserId={this.props.currentUserId}
                           messages={this.props.messages}
                           sendMessage={this.sendMessage}
+                          lastMessageLoaded={this.state.lastMessageLoaded}
+                          loading={this.state.loading}
                           loadMessages={this.loadMessages}/>
                 </Grid>
             </Grid>

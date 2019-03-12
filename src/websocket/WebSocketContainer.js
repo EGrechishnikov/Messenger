@@ -74,6 +74,7 @@ export const sendWebSocketMessage = message => {
         destination: '/chat/message',
         body: JSON.stringify(message)
     });
+    message.created = new Date();
     store.dispatch({
         type: ADD_MESSAGE,
         message: message

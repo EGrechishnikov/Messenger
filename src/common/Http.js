@@ -53,12 +53,13 @@ export const httpPost = (url, data, withFile) => {
 };
 
 export const login = credentials => {
-    axios.post(`${BASE_URL}/login`, JSON.stringify(credentials), HEADERS).then((response) => {
+    return axios.post(`${BASE_URL}/login`, JSON.stringify(credentials), HEADERS).then((response) => {
         handleTokens(response);
         localStorage.setItem('login', response.data.login);
         history.push('/');
     }).catch(exception => {
         console.log(exception);
+        return exception;
     });
 };
 

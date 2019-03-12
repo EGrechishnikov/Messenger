@@ -1,15 +1,30 @@
 import React from 'react';
 import UserDetail from './UserDetail';
-import {httpPost} from '../common/Http';
+import {httpGet, httpPost} from '../common/Http';
 import {connect} from 'react-redux';
 import history from '../common/History';
 import store from '../common/Store';
-import {UPDATE_CURRENT_USER} from "../reducer/UserReducer";
+import {UPDATE_CURRENT_USER} from '../reducer/UserReducer';
 
 class UserDetailContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {currentUser: undefined};
+        if (!this.props.currentUser) {
+            this.loadCurrentUser();
+        }
+    }
+
+    loadCurrentUser() {
+        if (localStorage.getItem('login')) {
+            httpGet(`user/${localStorage.getItem('login')}`).then(response => {
+                store.dispatch({
+                    type: UPDATE_CURRENT_USER,
+                    currentUser: response.data
+                });
+            });
+        } else {
+            history.push('/login');
+        }
     }
 
     save(user, avatar, event) {
@@ -31,14 +46,14 @@ class UserDetailContainer extends React.Component {
     }
 
     render() {
-        return(
-            <UserDetail save={this.save} currentUser={this.props.currentUser}/>
+        return (
+            this.props.currentUser ?
+                <UserDetail save={this.save} currentUser={this.props.currentUser}/> : null
         );
     }
 }
 
 const mapStateToProps = store => {
-    console.log(store.userState.currentUser);
     return {
         currentUser: store.userState.currentUser
     }

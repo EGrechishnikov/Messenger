@@ -4,6 +4,8 @@ import Button from "@material-ui/core/es/Button/Button";
 import Link from "react-router-dom/es/Link";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
+import {IconButton, Snackbar} from "@material-ui/core/es/index";
+import CloseIcon from '@material-ui/icons/Close';
 
 class Login extends React.Component {
     constructor(props) {
@@ -19,6 +21,8 @@ class Login extends React.Component {
         credentials[name] = value;
         this.setState({credentials: credentials});
     }
+
+
 
     render() {
         return (
@@ -66,15 +70,34 @@ class Login extends React.Component {
                                 submit
                             </Button>
                         </Grid>
-                            <Button component={Link}
-                                    to='/registration'
-                                    variant="contained"
-                                    color="secondary"
-                                    size='large'>
-                                registration
-                            </Button>
+                        <Button component={Link}
+                                to='/registration'
+                                variant="contained"
+                                color="secondary"
+                                size='large'>
+                            registration
+                        </Button>
                     </Grid>
                 </form>
+                <Snackbar anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                }}
+                          open={this.props.showWarning}
+                          message={<span>Wrong login or password!</span>}
+                          action={[
+
+                              <IconButton
+                                  key="close"
+                                  aria-label="Close"
+                                  color="inherit"
+                                  onClick={this.props.handleClose}
+                              >
+                                  <CloseIcon/>
+                              </IconButton>
+                          ]}>
+
+                </Snackbar>
             </Grid>
         );
     }

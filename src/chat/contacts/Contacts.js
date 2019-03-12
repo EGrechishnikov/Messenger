@@ -10,8 +10,9 @@ class Contacts extends React.Component {
     chatsRender() {
         return this.props.chats.map(chat => {
             let avatar;
-            if (chat.users[0].attachment) {
-                avatar = chat.users[0].attachment.content;
+            let contact = chat.users[0].id === this.props.currentUser.id ? chat.users[1] : chat.users[0];
+            if (contact.attachment) {
+                avatar = contact.attachment.content;
             }
             return (
                 <ListItem button key={chat.id}
@@ -24,7 +25,7 @@ class Contacts extends React.Component {
                             <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
                         </ListItemAvatar>
                     }
-                    <ListItemText primary={chat.users[0].name} secondary={chat.users[0].login}/>
+                    <ListItemText primary={contact.name} secondary={contact.login}/>
                 </ListItem>
             );
         });

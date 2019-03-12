@@ -6,14 +6,23 @@
 .mt-20
   margin-top: 20px !important
 
+.mt-6
+  margin-top: 6px !important
+
 .mr-20
   margin-right: 20px
+
+.ml-5
+  margin-left: 10px
 
 .ml-20
   margin-left: 20px !important
 
 .full-height
   height: 100vh
+
+.hidden
+  display: none
 
 .grow
   flex-grow: 1
@@ -33,19 +42,51 @@
 .messages::-webkit-scrollbar-thumb
   background-color: rgba(0,0,0,.3)
 
-.message, .my-message
+.message
   padding: 10px 15px
   font-size: 17px
   background-color: rgb(237, 239, 255) !important
+  min-width: 250px
 
 
-.my-message
-
+.my-message-wrapper
+  justify-content: flex-end !important
 
 .contacts-list
   background-color: rgb(245, 245, 245)
-  margin-top: 6px !important
   height: 70vh
 
 .active-contact
   background-color: rgb(229, 229, 230) !important
+
+.message-date
+  font-size: 11px
+  color: rgb(77, 77, 77)
+  text-align: right
+
+.photo
+  border-radius: 50%
+  max-width: 120px
+
+.search-list
+  position: absolute !important
+  z-index: 1000
+  background-color: #3f51b5
+  min-width: 300px
+  border-bottom-left-radius: 5px
+  border-bottom-right-radius: 5px
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)
+  li
+    color: rgb(255, 255, 255)
+
+.search-input
+  label, input
+    color: rgb(255, 255, 255) !important
+
+input[type=search]
+  width: 300px
+
+.MuiSnackbar-anchorOriginTopCenter-218
+  top: 30px !important
+  [role=alertdialog]
+    background-color: #cc1111

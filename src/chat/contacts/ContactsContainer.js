@@ -42,7 +42,7 @@ class ContactsContainer extends React.Component {
 
     render() {
         return (
-            <Contacts chats={this.props.chats} onChatClick={this.onChatClick} currentChat={this.props.currentChat}/>
+            <Contacts chats={this.props.chats} onChatClick={this.onChatClick} currentChat={this.props.currentChat} currentUser={this.props.currentUser}/>
         );
     }
 }
