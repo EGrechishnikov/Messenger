@@ -26,7 +26,7 @@ class Chat extends React.Component {
     }
 
     onScroll(event) {
-        if (!this.props.loading && !this.props.lastMessageLoaded && event.target.scrollTop < 150) {
+        if (!this.props.loading && !this.props.lastMessageLoaded && event.target.scrollTop < 100) {
             this.props.loadMessages(true, this.state.page);
         }
     }

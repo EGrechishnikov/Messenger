@@ -16,7 +16,7 @@ class MainContainer extends React.Component {
 
     render() {
         return(
-            <Main/>
+            <Main isChatPage={this.props.location.pathname === '/'}/>
         );
     }
 }

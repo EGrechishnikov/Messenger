@@ -3,10 +3,11 @@ import {connect} from 'react-redux';
 import {Client} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import store from '../common/Store';
-import {ADD_MESSAGE} from "../reducer/MessageReducer";
-import {withSnackbar} from "notistack";
-import Button from "@material-ui/core/Button/Button";
-import {CHANGE_CURRENT_CHAT} from "../reducer/ChatReducer";
+import {ADD_MESSAGE} from '../reducer/MessageReducer';
+import {withSnackbar} from 'notistack';
+import Button from '@material-ui/core/Button/Button';
+import {CHANGE_CURRENT_CHAT} from '../reducer/ChatReducer';
+import history from '../common/History';
 
 class WebSocketContainer extends React.Component {
     constructor(props) {
@@ -27,18 +28,18 @@ class WebSocketContainer extends React.Component {
     }
 
     handleMessageNotify(message) {
-        if (message.chatId === this.props.currentChat) {
-            store.dispatch({
-                type: ADD_MESSAGE,
-                message: message
-            });
-        } else {
-            this.props.enqueueSnackbar(`${message.fromUserId}: ${message.text}`, {
+        if (message.chatId !== this.props.currentChat || !this.props.isChatPage) {
+            this.props.enqueueSnackbar(message.text, {
                 anchorOrigin: {
                     vertical: 'bottom',
                     horizontal: 'right',
                 },
-                action: <Button size="small" onClick={this.onNotifyClick.bind(null, message.chatId)}>Open</Button>
+                action: <Button size='small' onClick={this.onNotifyClick.bind(null, message.chatId)}>Open</Button>
+            });
+        } else {
+            store.dispatch({
+                type: ADD_MESSAGE,
+                message: message
             });
         }
     }
@@ -48,6 +49,7 @@ class WebSocketContainer extends React.Component {
             type: CHANGE_CURRENT_CHAT,
             currentChat: chatId
         });
+        history.push('/');
     }
 
     componentDidMount() {

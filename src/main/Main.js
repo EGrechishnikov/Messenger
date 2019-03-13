@@ -17,7 +17,7 @@ class Main extends React.Component {
                     <Route path='/me' component={UserDetailContainer}/>
                 </Switch>
                 <SnackbarProvider maxSnack={MAX_MESSAGE_NOTIFY}>
-                    <WebSocketContainer/>
+                    <WebSocketContainer isChatPage={this.props.isChatPage}/>
                 </SnackbarProvider>
             </div>
         );

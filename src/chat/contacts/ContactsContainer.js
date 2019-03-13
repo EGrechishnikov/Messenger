@@ -1,9 +1,9 @@
 import React from 'react';
-import Contacts from "./Contacts";
+import Contacts from './Contacts';
 import {connect} from 'react-redux';
 import {httpGet} from '../../common/Http';
 import store from '../../common/Store';
-import {CHANGE_CURRENT_CHAT, LOAD_CHATS} from "../../reducer/ChatReducer";
+import {CHANGE_CURRENT_CHAT, LOAD_CHATS} from '../../reducer/ChatReducer';
 
 class ContactsContainer extends React.Component {
     constructor(props) {
