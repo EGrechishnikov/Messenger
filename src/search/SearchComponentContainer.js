@@ -27,20 +27,36 @@ class SearchComponentContainer extends React.Component {
     }
 
     onClick(userId) {
-        let currentUserId = this.props.currentUser.id;
-        let chat = {
-            users: [{id: currentUserId}, {id: userId}]
-        };
-        httpPost(`chat/${currentUserId}`, chat).then(response => {
-            store.dispatch({
-                type: ADD_CHAT,
-                chat: response.data
-            });
+        let currentChatId = 0;
+        this.props.chats.forEach(chat => {
+            chat.users.forEach(user => {
+                if (user.id === userId) {
+                    currentChatId = chat.id;
+                }
+            })
+        });
+        if (currentChatId !== 0) {
             store.dispatch({
                 type: CHANGE_CURRENT_CHAT,
-                currentChat: response.data.id
+                currentChat: currentChatId
             });
-        });
+        } else {
+            let currentUserId = this.props.currentUser.id;
+            let chat = {
+                users: [{id: currentUserId}, {id: userId}]
+            };
+            httpPost(`chat/${currentUserId}`, chat).then(response => {
+                store.dispatch({
+                    type: ADD_CHAT,
+                    chat: response.data
+                });
+                store.dispatch({
+                    type: CHANGE_CURRENT_CHAT,
+                    currentChat: response.data.id
+                });
+            });
+        }
+        this.setState({searchList: []});
     }
 
     render() {
@@ -54,7 +70,8 @@ class SearchComponentContainer extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        currentUser: store.userState.currentUser
+        currentUser: store.userState.currentUser,
+        chats: store.chatState.chats
     }
 };
 

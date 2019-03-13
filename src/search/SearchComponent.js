@@ -9,6 +9,7 @@ class SearchComponent extends React.Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.searchListRender = this.searchListRender.bind(this);
         this.changeSearchLine = this.changeSearchLine.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     onInputChange(event) {
@@ -20,9 +21,14 @@ class SearchComponent extends React.Component {
         this.props.doSearch(name);
     }
 
+    onClick(id) {
+        this.props.onClick(id);
+        this.setState({searchLine: ''});
+    }
+
     searchListRender() {
         return this.props.searchList.map(item =>
-            <MenuItem key={item.id} onClick={this.props.onClick.bind(null, item.id)}>{item.name}</MenuItem>);
+            <MenuItem key={item.id} onClick={this.onClick.bind(null, item.id)}>{item.name}</MenuItem>);
     }
 
     render() {
