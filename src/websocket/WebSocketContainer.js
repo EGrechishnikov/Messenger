@@ -8,6 +8,7 @@ import {withSnackbar} from 'notistack';
 import Button from '@material-ui/core/Button/Button';
 import {CHANGE_CURRENT_CHAT} from '../reducer/ChatReducer';
 import history from '../common/History';
+import {decryptMessage} from "../security/cipher/MessageCipher";
 
 class WebSocketContainer extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class WebSocketContainer extends React.Component {
 
     handleMessageNotify(message) {
         if (message.chatId !== this.props.currentChat || !this.props.isChatPage) {
-            this.props.enqueueSnackbar(message.text, {
+            this.props.enqueueSnackbar(decryptMessage(message.text), {
                 anchorOrigin: {
                     vertical: 'bottom',
                     horizontal: 'right',

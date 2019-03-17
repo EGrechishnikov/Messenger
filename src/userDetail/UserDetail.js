@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "react-router-dom/es/Link";
-import {Avatar, Fab, Grid, Typography} from "@material-ui/core/es/index";
+import {Fab, Grid, Typography} from "@material-ui/core/es/index";
 import Button from "@material-ui/core/es/Button/Button";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';

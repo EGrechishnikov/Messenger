@@ -8,6 +8,7 @@ import {PAGE_SIZE} from "../common/Config";
 import {sendWebSocketMessage} from "../websocket/WebSocketContainer";
 import {LOAD_MESSAGES, UPDATE_MESSAGES} from "../reducer/MessageReducer";
 import {Grid} from "@material-ui/core/es/index";
+import {encryptMessage} from "../security/cipher/MessageCipher";
 
 class ChatContainer extends React.Component {
     constructor(props) {
@@ -50,7 +51,7 @@ class ChatContainer extends React.Component {
     }
 
     sendMessage(message) {
-        sendWebSocketMessage({text: message, fromUserId: this.props.currentUserId, chatId: this.props.currentChat});
+        sendWebSocketMessage({text: encryptMessage(message), fromUserId: this.props.currentUserId, chatId: this.props.currentChat});
     }
 
     render() {

@@ -13,11 +13,19 @@ class Chat extends React.Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.onScroll = this.onScroll.bind(this);
+        this.handleScrollToEnd = this.handleScrollToEnd.bind(this);
         this.scrollToEnd = this.scrollToEnd.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
     }
 
     onInputChange(event) {
         this.setState({message: event.target.value});
+    }
+
+    onKeyPress(event) {
+        if (event.key === 'Enter') {
+            this.sendMessage();
+        }
     }
 
     sendMessage() {
@@ -31,12 +39,20 @@ class Chat extends React.Component {
         }
     }
 
-    scrollToEnd(list) {
+    handleScrollToEnd(list) {
         let listHeight = list.scrollHeight;
         if (!this.state.scrolled && listHeight > 550) {
-            list.scrollTop = listHeight;
-            this.setState({scrolled: true});
+            this.scrollToEnd(list);
         }
+    }
+
+    scrollToEnd(list) {
+        list.scrollTop = list.scrollHeight;
+        this.setState({scrolled: true});
+    }
+
+    componentDidMount() {
+        this.setState({scrolled: false});
     }
 
     componentDidUpdate(prevProps) {
@@ -45,10 +61,13 @@ class Chat extends React.Component {
         }
         let list = document.getElementsByClassName('messages')[0];
         if (list) {
-            this.scrollToEnd(list);
+            this.handleScrollToEnd(list);
             if (!list.onscroll) {
                 list.onscroll = this.onScroll;
             }
+        }
+        if (prevProps.messages.length !== this.props.messages.length) {
+            this.scrollToEnd(list);
         }
     }
 
@@ -77,6 +96,7 @@ class Chat extends React.Component {
                             rows='2'
                             rowsMax='2'
                             value={this.state.message}
+                            onKeyPress={this.onKeyPress}
                             onChange={this.onInputChange}/>
                     </Grid>
                     <Grid item className='ml-20 mt-20'>
