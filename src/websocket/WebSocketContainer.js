@@ -6,7 +6,7 @@ import store from '../common/Store';
 import {ADD_MESSAGE} from '../reducer/MessageReducer';
 import {withSnackbar} from 'notistack';
 import Button from '@material-ui/core/Button/Button';
-import {CHANGE_CURRENT_CHAT} from '../reducer/ChatReducer';
+import {CHANGE_CURRENT_CHAT, UPDATE_LAST_MESSAGE} from '../reducer/ChatReducer';
 import history from '../common/History';
 import {decryptMessage} from "../security/cipher/MessageCipher";
 
@@ -31,6 +31,8 @@ class WebSocketContainer extends React.Component {
     handleMessageNotify(message) {
         if (message.chatId !== this.props.currentChat || !this.props.isChatPage) {
             this.props.enqueueSnackbar(decryptMessage(message.text), {
+                variant: 'info',
+                autoHideDuration: 3000,
                 anchorOrigin: {
                     vertical: 'bottom',
                     horizontal: 'right',
@@ -43,6 +45,10 @@ class WebSocketContainer extends React.Component {
                 message: message
             });
         }
+        store.dispatch({
+            type: UPDATE_LAST_MESSAGE,
+            chat: {id: message.chatId, lastMessage: message}
+        });
     }
 
     onNotifyClick(chatId) {

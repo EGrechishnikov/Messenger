@@ -1,5 +1,6 @@
 import React from 'react';
-import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core/es/index";
+import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from '@material-ui/core/es/index';
+import {decryptMessage} from '../../security/cipher/MessageCipher';
 
 class Contacts extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class Contacts extends React.Component {
     chatsRender() {
         return this.props.chats.map(chat => {
             let avatar;
+            let lastMessage = chat.lastMessage ? decryptMessage(chat.lastMessage.text) : '';
             let contact = chat.users[0].id === this.props.currentUser.id ? chat.users[1] : chat.users[0];
             if (contact.attachment) {
                 avatar = contact.attachment.content;
@@ -25,7 +27,7 @@ class Contacts extends React.Component {
                             <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
                         </ListItemAvatar>
                     }
-                    <ListItemText primary={contact.name} secondary={contact.login}/>
+                    <ListItemText primary={contact.name} secondary={lastMessage}/>
                 </ListItem>
             );
         });

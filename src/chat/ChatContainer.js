@@ -9,6 +9,7 @@ import {sendWebSocketMessage} from "../websocket/WebSocketContainer";
 import {LOAD_MESSAGES, UPDATE_MESSAGES} from "../reducer/MessageReducer";
 import {Grid} from "@material-ui/core/es/index";
 import {encryptMessage} from "../security/cipher/MessageCipher";
+import {UPDATE_LAST_MESSAGE} from "../reducer/ChatReducer";
 
 class ChatContainer extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class ChatContainer extends React.Component {
 
     loadMessages(update, page = 0) {
         let chatId = this.props.currentChat;
-        if (chatId) {
+        if (chatId && !this.state.loading) {
             this.setState({loading: true});
             httpGet(`chat/${chatId}/messages`, [
                 {name: 'page', value: page},
@@ -28,17 +29,18 @@ class ChatContainer extends React.Component {
                 {name: 'sort', value: 'created,DESC'}
             ]).then(response => {
                 let messages = response.data.content;
+                setTimeout(() => this.setState({
+                    lastMessageLoaded: response.data.last,
+                    loading: false
+                }), 500);
                 if (update && messages.length === 0) {
+                    console.log(1);
                     return;
                 }
                 messages.sort((m1, m2) => m1.created > m2.created ? 1 : -1);
                 store.dispatch({
                     type: update ? UPDATE_MESSAGES : LOAD_MESSAGES,
                     messages: messages
-                });
-                this.setState({
-                    lastMessageLoaded: response.data.last,
-                    loading: false
                 });
             });
         }
@@ -51,7 +53,16 @@ class ChatContainer extends React.Component {
     }
 
     sendMessage(message) {
-        sendWebSocketMessage({text: encryptMessage(message), fromUserId: this.props.currentUserId, chatId: this.props.currentChat});
+        let encryptedMessage = {
+            text: encryptMessage(message),
+            fromUserId: this.props.currentUserId,
+            chatId: this.props.currentChat
+        };
+        sendWebSocketMessage(encryptedMessage);
+        store.dispatch({
+            type: UPDATE_LAST_MESSAGE,
+            chat: {id: this.props.currentChat, lastMessage: encryptedMessage}
+        });
     }
 
     render() {

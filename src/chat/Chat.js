@@ -31,11 +31,13 @@ class Chat extends React.Component {
     sendMessage() {
         this.props.sendMessage(this.state.message);
         this.setState({message: '', scrolled: false});
+
     }
 
     onScroll(event) {
         if (!this.props.loading && !this.props.lastMessageLoaded && event.target.scrollTop < 100) {
             this.props.loadMessages(true, this.state.page);
+            this.setState({page: this.state.page + 1});
         }
     }
 
@@ -57,7 +59,7 @@ class Chat extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.currentChat !== prevProps.currentChat) {
-            this.setState({scrolled: false});
+            this.setState({scrolled: false, page: 1});
         }
         let list = document.getElementsByClassName('messages')[0];
         if (list) {
