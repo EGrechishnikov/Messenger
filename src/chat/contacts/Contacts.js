@@ -27,7 +27,7 @@ class Contacts extends React.Component {
                             <Avatar alt='avatar' src={`data:image;base64,${avatar}`}/>
                         </ListItemAvatar>
                     }
-                    <ListItemText primary={contact.name} secondary={lastMessage}/>
+                    <ListItemText primary={contact.name ? contact.name : contact.login} secondary={lastMessage}/>
                 </ListItem>
             );
         });
